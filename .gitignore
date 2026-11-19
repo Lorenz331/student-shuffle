@@ -1,0 +1,5 @@
+.venv
+build
+dist
+Student Shuffle.spec
+__pycache__
