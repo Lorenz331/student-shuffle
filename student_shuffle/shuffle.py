@@ -1,6 +1,6 @@
+import random
 from collections import defaultdict
 from itertools import combinations
-import random
 
 from ortools.sat.python import cp_model
 

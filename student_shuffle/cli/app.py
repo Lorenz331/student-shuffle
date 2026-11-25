@@ -8,7 +8,7 @@ from student_shuffle.cli.display import (
     print_session,
     print_session_list,
     print_students,
-    print_title_screen
+    print_title_screen,
 )
 from student_shuffle.cli.prompts import (
     ask_choice,
@@ -17,7 +17,7 @@ from student_shuffle.cli.prompts import (
     ask_yes_no,
     parse_indices,
     parse_named_groups,
-    pause
+    pause,
 )
 from student_shuffle.models import Session
 from student_shuffle.persistence import load_history, save_history
@@ -33,43 +33,36 @@ class CLI:
         try:
             while self.main_menu():
                 pass
-        except (KeyboardInterrupt, EOFError):
+        except KeyboardInterrupt:
             print("\nGoodbye.")
 
     def save(self):
         save_history(self.history)
 
     def main_menu(self):
-        try:
-            clear()
-            print_title_screen(len(self.history.students), len(self.history.sessions))
-            print("    [1] New Shuffle")
-            print("    [2] Manage Students")
-            print("    [3] Manage Sessions")
-            print("    [4] Reset")
-            print("    [0] Exit")
-            print("-" * WIDTH)
-            option = ask_choice(
-                "Select an option [1]: ",
-                ["0", "1", "2", "3", "4"],
-                default="1",
-            )
-            if option == "0":
-                return False
-            if option == "1":
-                self.new_shuffle()
-            elif option == "2":
-                self.manage_students()
-            elif option == "3":
-                self.manage_sessions()
-            elif option == "4":
-                self.wipe_data()
-        except (KeyboardInterrupt, EOFError):
-            raise
-        except Exception as error:
-            print(f"\nError: {error}")
-            pause()
-        return True
+        clear()
+        print_title_screen(len(self.history.students), len(self.history.sessions))
+        print("    [1] New Shuffle")
+        print("    [2] Manage Students")
+        print("    [3] Manage Sessions")
+        print("    [4] Reset")
+        print("    [0] Exit")
+        print("-" * WIDTH)
+        option = ask_choice(
+            "Select an option [1]: ",
+            ["0", "1", "2", "3", "4"],
+            default="1",
+        )
+        if option == "0":
+            return False
+        if option == "1":
+            self.new_shuffle()
+        elif option == "2":
+            self.manage_students()
+        elif option == "3":
+            self.manage_sessions()
+        elif option == "4":
+            self.wipe_data()
 
     def new_shuffle(self):
         clear()
@@ -232,7 +225,9 @@ class CLI:
             print("No names entered.")
             return
 
-        existing_lookup = {student.lower(): student for student in self.history.students}
+        existing_lookup = {
+            student.lower(): student for student in self.history.students
+        }
         existing_names = []
         new_names = []
         for name in names:
@@ -344,7 +339,9 @@ class CLI:
         graded = ()
         if ask_yes_no("Was one group graded today?", default=True):
             while True:
-                raw = input("Enter graded group student numbers separated by spaces (or Enter to cancel): ").strip()
+                raw = input(
+                    "Enter graded group student numbers separated by spaces (or Enter to cancel): "
+                ).strip()
                 if not raw:
                     print("Cancelled.")
                     return
@@ -361,7 +358,9 @@ class CLI:
         practice = []
         if ask_yes_no("Did other students practice today?", default=True):
             while True:
-                raw = input("Enter practice groups; separate groups with commas and students with spaces (e.g. '1 2, 3 4 5'). Enter to cancel: ").strip()
+                raw = input(
+                    "Enter practice groups; separate groups with commas and students with spaces (e.g. '1 2, 3 4 5'). Enter to cancel: "
+                ).strip()
                 if not raw:
                     print("Cancelled.")
                     return

@@ -1,4 +1,3 @@
-import json
 from pathlib import Path
 
 from platformdirs import user_data_dir
@@ -21,11 +20,8 @@ def load_history():
     raw = file_path.read_text(encoding="utf-8")
     try:
         return History.model_validate_json(raw)
-    except (ValidationError, ValueError, json.JSONDecodeError):
-        decoded = json.loads(raw)
-        if isinstance(decoded, str):
-            return History.model_validate_json(decoded)
-        return History.model_validate(decoded)
+    except ValidationError:
+        return History()
 
 
 def save_history(history):

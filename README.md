@@ -1,12 +1,12 @@
 # Student Shuffle
 
-A small classroom helper I built for my teacher that builds graded and practice groups while trying to avoid repeating partnerships and spreading grades across students.
+A classroom helper I built for my teacher that builds graded and practice groups while trying to avoid repeating partnerships and spreading grades across students.
 
 ## How it works
 
 - Students and past sessions are saved as `history.json` in the platform user data directory.
 
-- When the shuffle algorithm works, students with the least grades are getting graded before others.
+- Students with the least grades are getting graded before others.
 
 - Pairs with a higher repitition get a worse score than pairs that worked together less often.
 
@@ -14,13 +14,13 @@ A small classroom helper I built for my teacher that builds graded and practice 
 
 ## Menus
 
-- **New Shuffle**: mark absences, choose graded/practice group sizes, review, save or re-shuffle
+- **New Shuffle**: Mark absences, choose graded/practice group sizes, review, save or re-shuffle.
 
-- **Manage Students**: add or remove names
+- **Manage Students**: Add or remove names.
 
-- **Manage Sessions**: view, delete, or manually log a session
+- **Manage Sessions**: View, delete, or manually log a session.
 
-- **Reset**: clear sessions or everything
+- **Reset**: Clear sessions or everything.
 
 ## How to Run
 
