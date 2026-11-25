@@ -2,7 +2,7 @@ def pause(message="Press ENTER to continue..."):
     input(message)
 
 
-def ask_choice(prompt, options, default=None):
+def ask_choice(prompt: str, options: list[str], default=None) -> str:
     allowed = {option.lower(): option for option in options}
     default_key = default.lower() if default is not None else None
 
@@ -21,7 +21,7 @@ def ask_choice(prompt, options, default=None):
         print("Invalid option. Please try again.")
 
 
-def ask_yes_no(prompt, default=True):
+def ask_yes_no(prompt: str, default=True) -> bool:
     suffix = " (Y/n): " if default else " (y/N): "
     while True:
         raw = input(prompt + suffix).strip().lower()
@@ -34,7 +34,7 @@ def ask_yes_no(prompt, default=True):
         print("Please enter y or n.")
 
 
-def ask_int_in(prompt, allowed):
+def ask_int_in(prompt: str, allowed: list[int]) -> int:
     allowed_list = list(allowed)
     allowed_set = set(allowed_list)
     choices = ", ".join(str(value) for value in allowed_list)
@@ -51,12 +51,12 @@ def ask_int_in(prompt, allowed):
         print(f"Please enter {choices}.")
 
 
-def parse_indices(text, count):
+def parse_indices(text: str, count: int) -> tuple[list[int], str | None]:
     text = text.strip()
     if not text:
         return [], None
     if count <= 0:
-        return None, "There are no items to select."
+        return [], "There are no items to select."
 
     indices = []
     seen = set()
@@ -64,18 +64,18 @@ def parse_indices(text, count):
         try:
             number = int(part)
         except ValueError:
-            return None, f"'{part}' is not a number."
+            return [], f"'{part}' is not a number."
         if number < 1 or number > count:
-            return None, f"{number} is out of range (1-{count})."
+            return [], f"{number} is out of range (1-{count})."
         index = number - 1
         if index in seen:
-            return None, f"Number {number} was entered more than once."
+            return [], f"Number {number} was entered more than once."
         seen.add(index)
         indices.append(index)
     return indices, None
 
 
-def ask_indices(prompt, count, allow_empty=True):
+def ask_indices(prompt: str, count: int, allow_empty=True) -> list[int]:
     while True:
         raw = input(prompt).strip()
         if not raw:
@@ -90,17 +90,17 @@ def ask_indices(prompt, count, allow_empty=True):
         return indices
 
 
-def parse_named_groups(text, students):
+def parse_named_groups(text: str, students: list[str]) -> tuple[list[tuple[str, ...]], str | None]:
     chunks = [chunk.strip() for chunk in text.split(",") if chunk.strip()]
     if not chunks:
-        return None, "Please enter at least one group."
+        return [], "Please enter at least one group."
 
     groups = []
     for chunk in chunks:
         indices, error = parse_indices(chunk, len(students))
         if error:
-            return None, error
+            return [], error
         if len(indices) < 2 or len(indices) > 3:
-            return None, "Each group must have 2 or 3 students."
+            return [], "Each group must have 2 or 3 students."
         groups.append(tuple(students[index] for index in indices))
     return groups, None

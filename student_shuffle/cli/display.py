@@ -1,20 +1,22 @@
 import math
 import os
 
+from student_shuffle.models import Session
+
 WIDTH = 50
 
 
-def clear():
+def clear() -> None:
     os.system("cls" if os.name == "nt" else "clear")
 
 
-def print_header(title):
+def print_header(title: str) -> None:
     print("=" * WIDTH)
     print(f" {title}")
     print("=" * WIDTH)
 
 
-def print_title_screen(student_count, session_count):
+def print_title_screen(student_count: int, session_count: int) -> None:
     print("=" * WIDTH)
     print(f"{'STUDENT SHUFFLE':^{WIDTH}}")
     print(f"{'by Lorenz':^{WIDTH}}")
@@ -23,13 +25,13 @@ def print_title_screen(student_count, session_count):
     print("-" * WIDTH)
 
 
-def print_counts(student_count, session_count):
+def print_counts(student_count: int, session_count: int) -> None:
     left = f"{student_count} Students"
     right = f"{session_count} Sessions"
     print(f"{left:^24} | {right:^24}")
 
 
-def print_students(students, grades):
+def print_students(students: list[str], grades: dict[str, int]) -> None:
     if not students:
         print("  No students yet.")
         print("-" * WIDTH)
@@ -47,7 +49,7 @@ def print_students(students, grades):
     print("-----------------------------------+----------------------------------")
 
 
-def print_session(graded, practice):
+def print_session(graded: tuple[str, ...], practice: list[tuple[str, ...]]) -> None:
     if graded:
         print(f"Graded Group:\n - {', '.join(graded)}")
     if practice:
@@ -59,7 +61,7 @@ def print_session(graded, practice):
     print("-" * WIDTH)
 
 
-def print_session_list(sessions):
+def print_session_list(sessions: list[Session]) -> None:
     print("  ID   Date        Graded                                   Practice")
     print("-" * 70)
     if not sessions:

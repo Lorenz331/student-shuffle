@@ -1,4 +1,4 @@
-from student_shuffle.cli import main
+from student_shuffle.cli.app import main
 
 if __name__ == "__main__":
     main()
